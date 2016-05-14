@@ -1,10 +1,10 @@
 import random,skill,unit
 def simlive(unit):
 	difficultybouns=1.9 #master 26
-	note=600
+	note=0
 	time=120*60 #fraps
-	tap=time/note
-	standard=unit.appeal*difficultybouns/note
+	tap=time/maxnote
+	standard=unit.appeal*difficultybouns/maxnote
 	score=0
 	combobouns=1.0
 	for nowtime in range(0,time):
@@ -22,23 +22,23 @@ def simlive(unit):
 				else:
 					if s.effect>cb:
 						cb=s.effect
-		if nowtime%tap==0:
-			score+=standard*(sb+100)*(cb+100)*combobouns//10000
-			note-=1
-			if note==570:
+		if nowtime==int(note*tap):
+			note+=1
+			if note==maxnote//20:
 				combobouns=1.1
-			if note==540:
+			if note==maxnote//10:
 				combobouns=1.2
-			if note==450:
+			if note==maxnote//4:
 				combobouns=1.3
-			if note==300:
+			if note==maxnote//2:
 				combobouns=1.4
-			if note==180:
+			if note==int(maxnote*0.7):
 				combobouns=1.5
-			if note==120:
+			if note==int(maxnote*0.8):
 				combobouns=1.7
-			if note==60:
+			if note==int(maxnote*0.9):
 				combobouns=2.0
+			score+=standard*(sb+100)*(cb+100)*combobouns//10000
 	return score
 def simlivetest(unit,times):
 	ts=0
