@@ -1,6 +1,7 @@
 import random,skill,unit
 def simlive(unit):
 	difficultybouns=1.9 #master 26
+	maxnote=600
 	note=0
 	time=120*60 #fraps
 	tap=time/maxnote
