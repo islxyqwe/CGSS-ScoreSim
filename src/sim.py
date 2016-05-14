@@ -7,7 +7,7 @@ def simlive(unit):
 	standard=unit.appeal*difficultybouns/note
 	score=0
 	combobouns=1.0
-	for nowtime in range(0,time-1):
+	for nowtime in range(0,time):
 		sb=0
 		cb=0
 		for s in unit.skills:
@@ -43,7 +43,7 @@ def simlive(unit):
 def simlivetest(unit,times):
 	ts=0
 	bs=0
-	for i in range(1,times):
+	for i in range(0,times):
 		ns=simlive(unit)
 		if ns>bs:
 			bs=ns
