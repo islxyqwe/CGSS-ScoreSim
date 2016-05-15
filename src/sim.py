@@ -50,6 +50,6 @@ def simlivetest(unit,times):
 			bs=ns
 		ts+=ns
 	avg=ts//times
-	print("avg score=",avg)
-	print("best score=",bs)
+	#print("avg score=",avg)
+	#print("best score=",bs)
 	return bs

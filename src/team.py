@@ -1,4 +1,4 @@
-import unit,centerskill,idol
+import unit,centerskill,idol,math
 def calcbackappeal(idols,buff):
 	appeal=0
 	buffedidols=[]
@@ -18,14 +18,14 @@ class team:
 		totalbuff = idols[0].centerskill+guest.centerskill+buff+cubuff+cobuff+pabuff+centerskill.centerskill("all","all",100)
 		self.skills=[]
 		for i in idols:
-			self.vo+=i.vo*getattr(totalbuff,i.type+"vo")//100
-			self.vi+=i.vi*getattr(totalbuff,i.type+"vi")//100
-			self.da+=i.da*getattr(totalbuff,i.type+"da")//100
-			self.life+=i.life*getattr(totalbuff,i.type+"life")//100
+			self.vo+=math.ceil(i.vo*getattr(totalbuff,i.type+"vo")/100)
+			self.vi+=math.ceil(i.vi*getattr(totalbuff,i.type+"vi")/100)
+			self.da+=math.ceil(i.da*getattr(totalbuff,i.type+"da")/100)
+			self.life+=math.ceil(i.life*getattr(totalbuff,i.type+"life")/100)
 			self.skills.append(i.skill)
-		self.vo+=guest.vo*getattr(totalbuff,guest.type+"vo")//100
-		self.vi+=guest.vi*getattr(totalbuff,guest.type+"vi")//100
-		self.da+=guest.da*getattr(totalbuff,guest.type+"da")//100
-		self.life+=guest.life*getattr(totalbuff,i.type+"life")//100
-		self.appeal+=self.vo+self.vi+self.da+18 #6*3
+		self.vo+=math.ceil(guest.vo*getattr(totalbuff,guest.type+"vo")/100)
+		self.vi+=math.ceil(guest.vi*getattr(totalbuff,guest.type+"vi")/100)
+		self.da+=math.ceil(guest.da*getattr(totalbuff,guest.type+"da")/100)
+		self.life+=math.ceil(guest.life*getattr(totalbuff,i.type+"life")/100)
+		self.appeal+=self.vo+self.vi+self.da
 		self.unit=unit.unit(self.appeal,self.skills)
