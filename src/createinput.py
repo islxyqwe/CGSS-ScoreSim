@@ -45,8 +45,11 @@ def main(argv):
 		s4=skill.skill(r[19],r[20],r[21],r[22],r[23],r[24])
 		s5=skill.skill(r[25],r[26],r[27],r[28],r[29],r[30])
 		u=unit.unit(int(r[0]),[s1,s2,s3,s4,s5])
-		s=str(int(sim.simlivetest(u,25)))
-		r.append(s)
+		s=0
+		for j in range (0,25):
+			s+=int(sim.simlivetest(u,25))
+		s=s//25
+		r.append(str(s))
 		writer.writerow(r)
 		print(i+1,"/",time)
 	fo.close()

@@ -23,4 +23,9 @@ t=team.team([i3,i2,i4,i1,i5],i4,99798,songbouns,cubouns,cobouns,pabouns)
 u=t.unit
 #u=unit.unit(288017,[s1,s2,s3,s4,s5])
 print(nn.simlivenn(u))
-print(sim.simlivetest(u,25))
+
+for i in range(0,10):
+	s=0
+	for j in range(0,10):
+		s+=sim.simlivetest(u,10)
+	print(s//10)
