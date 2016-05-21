@@ -32,7 +32,7 @@ def main(argv):
 	for i in range(0,31):
 		form.append([-1,1])
 	
-	net = nl.net.newff(form,[5,1])
+	net = nl.net.newff(form,[60,30,1])
 	
 	testset=np.loadtxt(testset, delimiter=",")
 	xt=testset[:,0:31]

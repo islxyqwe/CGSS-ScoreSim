@@ -19,13 +19,13 @@ class team:
 		self.skills=[]
 		for i in idols:
 			self.vo+=math.ceil(i.vo*getattr(totalbuff,i.type+"vo")/100)
-			self.vi+=math.ceil(i.vi*getattr(totalbuff,i.type+"vi")/100)
 			self.da+=math.ceil(i.da*getattr(totalbuff,i.type+"da")/100)
+			self.vi+=math.ceil(i.vi*getattr(totalbuff,i.type+"vi")/100)
 			self.life+=math.ceil(i.life*getattr(totalbuff,i.type+"life")/100)
 			self.skills.append(i.skill)
 		self.vo+=math.ceil(guest.vo*getattr(totalbuff,guest.type+"vo")/100)
-		self.vi+=math.ceil(guest.vi*getattr(totalbuff,guest.type+"vi")/100)
 		self.da+=math.ceil(guest.da*getattr(totalbuff,guest.type+"da")/100)
+		self.vi+=math.ceil(guest.vi*getattr(totalbuff,guest.type+"vi")/100)
 		self.life+=math.ceil(guest.life*getattr(totalbuff,i.type+"life")/100)
 		self.appeal+=self.vo+self.vi+self.da
 		self.unit=unit.unit(self.appeal,self.skills)
