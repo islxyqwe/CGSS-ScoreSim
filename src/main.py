@@ -21,7 +21,7 @@ songbouns=centerskill.centerskill("all","appeal",30)+centerskill.centerskill("al
 cubouns=centerskill.centerskill("cu","appeal",10)
 cobouns=centerskill.centerskill("co","appeal",10)
 pabouns=centerskill.centerskill("pa","appeal",10)
-t=team.team([i3,i2,i4,i1,i5],i4,99798,songbouns,cubouns,cobouns,pabouns)
+t=team.team([i3,i2,i4,i6,i1],i4,99798,songbouns,cubouns,cobouns,pabouns)
 u=t.unit
 #u=unit.unit(294969,[s6,s7,s8,s9,s10])
 calc.calclive(calc.samplesong(),u,25)
