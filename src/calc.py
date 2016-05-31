@@ -1,4 +1,4 @@
-# song=[[note= int(location in fraps)...],diffcultyrate,color=0,1,2,3(all,cute,cool,passion)]
+# song=[[note= int(location in fraps)...],diffcultyrate,color=""(all,cute,cool,passion)]
 # note=[[socre,happeningrate]...]
 # bouns=[bounsrate,happeningrate]
 # bounses=[bouns...]
@@ -8,7 +8,7 @@ def samplesong():
 	notes=[]
 	for i in range(1,601):
 		notes.append(i*12)
-	return [notes,1.9,0]
+	return [notes,1.9,"all"]
 def bounsappend(bounses,bounsrate,happeningrate):
 	newrate=0
 	for bouns in bounses:
@@ -59,15 +59,15 @@ def calcmax(PDF,times):
 	for x in CDF:
 		x[1]=x[1]**times
 	return CDF2PDF(CDF)
-def bounsofnote(location,skills):
+def bounsofnote(location,skills,songcolor):
 	cbbouns=[[1,1]]
 	sbbouns=[[1,1]]
 	for skill in skills:
 		if location%skill.interval<=skill.last:
 			if skill.type:
-				sbbouns=bounsappend(sbbouns,1+skill.effect/100,skill.rate/100)
+				sbbouns=bounsappend(sbbouns,1+skill.effect/100,skill.getrate(songcolor)/100)
 			else:
-				cbbouns=bounsappend(cbbouns,1+skill.effect/100,skill.rate/100)
+				cbbouns=bounsappend(cbbouns,1+skill.effect/100,skill.getrate(songcolor)/100)
 	totalbouns=calctotalbouns(sbbouns,cbbouns)
 	return totalbouns
 def calcnotescore(standardscore,totalbouns,combobouns):
@@ -97,12 +97,12 @@ def calcscore(song,unit):
 			combobouns=1.7
 		if note==int(maxnote*0.9):
 			combobouns=2.0
-		notes.append(calcnotescore(standard,bounsofnote(n,unit.skills),combobouns))
+		notes.append(calcnotescore(standard,bounsofnote(n,unit.skills,song[2]),combobouns))
 	return notes
 def anylizeskill(song,unit):
 	bounses=[]
 	for n in song[0]:
-		bounses.append(bounsofnote(n,unit.skills))
+		bounses.append(bounsofnote(n,unit.skills,song[2]))
 	return bounses
 def calclive(song,unit,times):
 	notes=calcscore(song,unit)

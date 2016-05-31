@@ -9,3 +9,4 @@ class idol:
 		self.centerskill = centerskill
 		self.life = life
 		self.appeal=vo+vi+da
+		self.skill.color=type
