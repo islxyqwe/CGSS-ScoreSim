@@ -6,6 +6,7 @@ class skill:
 		self.effect = int(effect)
 		self.rate = (30+5*int(rate))*(1+0.054*(int(level)-1))
 		self.lasttime = 0
+		self.level=level
 		self.array=[type, interval, last, effect, level, rate]
 		self.color=""
 	def getrate(self,color):

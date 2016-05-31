@@ -77,7 +77,7 @@ def calcnotescore(standardscore,totalbouns,combobouns):
 	return note
 def calcscore(song,unit):
 	maxnote=len(song[0])
-	standard=unit.appeal*song[1]/maxnote
+	standard=unit.appeal*float(song[1])/maxnote
 	note=0
 	combobouns=1
 	notes=[]
@@ -97,12 +97,12 @@ def calcscore(song,unit):
 			combobouns=1.7
 		if note==int(maxnote*0.9):
 			combobouns=2.0
-		notes.append(calcnotescore(standard,bounsofnote(n,unit.skills,song[2]),combobouns))
+		notes.append(calcnotescore(standard,bounsofnote(int(n),unit.skills,song[2]),combobouns))
 	return notes
 def anylizeskill(song,unit):
 	bounses=[]
 	for n in song[0]:
-		bounses.append(bounsofnote(n,unit.skills,song[2]))
+		bounses.append(bounsofnote(int(n),unit.skills,song[2]))
 	return bounses
 def calclive(song,unit,times):
 	notes=calcscore(song,unit)
