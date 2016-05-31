@@ -111,8 +111,7 @@ def calclive(song,unit,times):
 	for n in notes:
 		avgscore+=calcE(n)
 		avgmaxscore+=calcE(calcmax(n,times))
-	print("期望得分="+str(avgscore))
-	print(str(times)+"次的期望最大得分="+str(avgmaxscore))
+	return "期望得分="+str(avgscore)+"\n"+str(times)+"次的期望最大得分="+str(avgmaxscore)
 def skillcoverage(data):
 	score=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	rating=[
