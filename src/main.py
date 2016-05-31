@@ -1,5 +1,4 @@
-import sim,skill,unit,centerskill,idol,team
-#import nn
+import skill,unit,centerskill,idol,team
 import calc
 low=1
 med=2
@@ -25,8 +24,6 @@ pabouns=centerskill.centerskill("pa","appeal",10)
 t=team.team([i3,i2,i4,i1,i5],i4,99798,songbouns,cubouns,cobouns,pabouns)
 u=t.unit
 #u=unit.unit(294969,[s6,s7,s8,s9,s10])
-#print(nn.simlivenn(u))
-#print(sim.simlivetest(u,25))
 calc.calclive(calc.samplesong(),u,25)
 notebouns=calc.anylizeskill(calc.samplesong(),u)
 res=calc.calcEs(notebouns)
