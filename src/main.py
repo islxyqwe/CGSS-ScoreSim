@@ -51,7 +51,11 @@ def createteam(*args):
 	song=songs[int(s[0:s.index('.')])-1]
 	song=song[1:]
 	songbouns=centerskill.centerskill(song[2],"appeal",30)+centerskill.centerskill(song[2],"skill",30)
-	u=team.team(idolteam[:5],idolteam[5],int(backappeal.get()),songbouns,cubouns,cobouns,pabouns).unit
+	try:
+		ba=int(backappeal.get())
+	except:
+		ba=0
+	u=team.team(idolteam[:5],idolteam[5],ba,songbouns,cubouns,cobouns,pabouns).unit
 	comment.set("总APPEAL值="+str(u.appeal))
 def calcprepare():
 	idolteam=[]
@@ -62,7 +66,11 @@ def calcprepare():
 	song=songs[int(s[0:s.index('.')])-1]
 	song=song[1:]
 	songbouns=centerskill.centerskill(song[2],"appeal",30)+centerskill.centerskill(song[2],"skill",30)
-	u=team.team(idolteam[:5],idolteam[5],int(backappeal.get()),songbouns,cubouns,cobouns,pabouns).unit
+	try:
+		ba=int(backappeal.get())
+	except:
+		ba=0
+	u=team.team(idolteam[:5],idolteam[5],ba,songbouns,cubouns,cobouns,pabouns).unit
 	return [song,u]
 def calcresult(*args):
 	data=calcprepare()
