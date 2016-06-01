@@ -3,7 +3,45 @@
 # bouns=[bounsrate,happeningrate]
 # bounses=[bouns...]
 # totalbouns=bouns(cbbouns*sbbouns)
+# num=[standard,numpyarray]
 import skill,unit
+import numpy as np
+def fft_convolve(a,b):
+    n = len(a)+len(b)-1
+    N = 2**(int(np.log2(n))+1)
+    A = np.fft.fft(a, N)
+    B = np.fft.fft(b, N)
+    return np.fft.ifft(A*B)[:n]
+def convolve(a,b):
+	return [a[0]+b[0],fft_convolve(a[1],b[1])]
+def notes2numpyarray(notes):
+	a=[]
+	for n in notes:
+		standard=int(min(n)[0])
+		length=int(max(n)[0]-standard+1)
+		temp=np.zeros(length)
+		for b in n:
+			temp[int(b[0]-standard)]+=b[1]
+		a.append([standard,temp])
+	return a
+def sumscore(notes):
+	a=notes2numpyarray(notes)
+	sum=a[0]
+	for i in range(1,len(a)):
+		print(str(i)+"/"+str(len(a)-1))
+		sum=convolve(sum,a[i])
+	return sum
+def numcalcE(a):
+	length=len(a[1])
+	sum=np.average(a[1],weights=np.arange(length)).real
+	sum=a[0]+sum*length*(length-1)/2
+	return sum
+def numcalcmax(a,times):
+	length=len(a[1])
+	b=np.cumsum(a[1])
+	b=b**times
+	c=np.append(b[0],np.diff(b))
+	return [a[0],c]
 def samplesong():
 	notes=[]
 	for i in range(1,601):
@@ -104,14 +142,31 @@ def anylizeskill(song,unit):
 	for n in song[0]:
 		bounses.append(bounsofnote(int(n),unit.skills,song[2]))
 	return bounses
-def calclive(song,unit,times):
+def anylyselive(song,unit):
+	times=25
 	notes=calcscore(song,unit)
+	s=sumscore(notes)
+	avgscore2=numcalcE(s)
+	avgmaxscore=numcalcE(numcalcmax(s,25))
+	minscore=s[0]
+	maxscore=s[0]+len(s[1])-1
+	t=np.cumsum(s[1])
+	percent10=s[0]+np.where(t>0.1)[0][0]
+	percent25=s[0]+np.where(t>0.25)[0][0]
+	percent50=s[0]+np.where(t>0.5)[0][0]
+	percent75=s[0]+np.where(t>0.75)[0][0]
+	percent90=s[0]+np.where(t>0.9)[0][0]
+	returnstr="期望得分="+str(avgscore2)+"\n"+str(times)+"次的期望最大得分="+str(avgmaxscore)
+	returnstr=returnstr+"\n最小得分="+str(minscore)+"\n10%得分小于="+str(percent10)+"\n25%得分小于="+str(percent25)
+	returnstr=returnstr+"\n50%得分小于="+str(percent50)+"\n75%得分小于="+str(percent75)
+	returnstr=returnstr+"\n90%得分小于="+str(percent90)+"\n最高得分="+str(maxscore)
+	return returnstr
+def calclive(song,unit):
 	avgscore=0
-	avgmaxscore=0
+	notes=calcscore(song,unit)
 	for n in notes:
 		avgscore+=calcE(n)
-		avgmaxscore+=calcE(calcmax(n,times))
-	return "期望得分="+str(avgscore)+"\n"+str(times)+"次的期望最大得分="+str(avgmaxscore)
+	return "期望得分="+str(avgscore)
 def skillcoverage(data):
 	score=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	rating=[

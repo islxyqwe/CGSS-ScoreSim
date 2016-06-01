@@ -1,5 +1,7 @@
 import skill,unit,centerskill,idol,team
 import calc,csv
+import _thread
+
 # low=1
 # med=2
 # high=3
@@ -32,7 +34,7 @@ with open('last.csv', newline='') as csvfile:
 	reader = csv.reader(csvfile, delimiter=',')
 	for row in reader:
 		setting=row
-songbouns=centerskill.centerskill("all","appeal",30)+centerskill.centerskill("all","skill",30)
+
 cubouns=centerskill.centerskill("cu","appeal",10)
 cobouns=centerskill.centerskill("co","appeal",10)
 pabouns=centerskill.centerskill("pa","appeal",10)
@@ -45,21 +47,37 @@ def createteam(*args):
 	for i in range(0,6):
 		s=myteam[i].get()
 		idolteam.append(idols[int(s[0:s.index('.')])-1])
+	s=mysong.get()
+	song=songs[int(s[0:s.index('.')])-1]
+	song=song[1:]
+	songbouns=centerskill.centerskill(song[2],"appeal",30)+centerskill.centerskill(song[2],"skill",30)
 	u=team.team(idolteam[:5],idolteam[5],int(backappeal.get()),songbouns,cubouns,cobouns,pabouns).unit
 	comment.set("总APPEAL值="+str(u.appeal))
-def calcresult(*args):
+def calcprepare():
 	idolteam=[]
 	for i in range(0,6):
 		s=myteam[i].get()
 		idolteam.append(idols[int(s[0:s.index('.')])-1])
-	u=team.team(idolteam[:5],idolteam[5],int(backappeal.get()),songbouns,cubouns,cobouns,pabouns).unit
 	s=mysong.get()
 	song=songs[int(s[0:s.index('.')])-1]
 	song=song[1:]
-	s=calc.calclive(song,u,25)
-	notebouns=calc.anylizeskill(song,u)
+	songbouns=centerskill.centerskill(song[2],"appeal",30)+centerskill.centerskill(song[2],"skill",30)
+	u=team.team(idolteam[:5],idolteam[5],int(backappeal.get()),songbouns,cubouns,cobouns,pabouns).unit
+	return [song,u]
+def calcresult(*args):
+	data=calcprepare()
+	s=calc.calclive(data[0],data[1])
+	notebouns=calc.anylizeskill(data[0],data[1])
 	res=calc.calcEs(notebouns)
 	s=s+"\n技能分析：\n"+calc.skillcoverage(res)
+	messagebox.showinfo('计算结果', s)
+def anylyse(*args):
+	data=calcprepare()
+	pro.start()
+	s=_thread.start_new_thread(anylysetheard,(data[0],data[1],pro,) )
+def anylysetheard(song,unit,pro):
+	s=calc.anylyselive(song,unit)
+	pro.stop()
 	messagebox.showinfo('计算结果', s)
 root=tk.Tk()
 root.title("CGSS分数计算器&技能分析")
@@ -81,6 +99,7 @@ for i in range(0,6):
 	myteam[i].trace("w",createteam)
 mysong=tk.StringVar()
 mysong.set(songselection[int(setting[0])])
+mysong.trace("w",createteam)
 tk.Label(root,text='歌曲').pack()
 ttk.Combobox(root,text=mysong,values=songselection,width=50,state='readonly').pack()
 tk.Label(root,text='Center偶像').pack()
@@ -99,7 +118,10 @@ comment=tk.StringVar()
 comment.set("总APPEAL值=")
 createteam()
 tk.Label(root,textvariable=comment).pack()
-tk.Button(root,text='计算',command=calcresult,activeforeground='white',activebackground='red').pack()
+tk.Button(root,text='计算期望与技能覆盖',command=calcresult,activeforeground='white',activebackground='red').pack()
+tk.Button(root,text='分析得分分布情况（警告：慢）',command=anylyse,activeforeground='white',activebackground='red').pack()
+pro=ttk.Progressbar(root)
+pro.pack()
 root.mainloop()
 with open('last.csv','w', newline='') as csvfile:
 	writer = csv.writer(csvfile, delimiter=',')
