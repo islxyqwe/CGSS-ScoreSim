@@ -1,7 +1,7 @@
 import skill,unit,centerskill,idol,team
 import calc,csv
 import _thread
-
+import calcdp
 # low=1
 # med=2
 # high=3
@@ -84,7 +84,7 @@ def anylyse(*args):
 	pro.start()
 	s=_thread.start_new_thread(anylysetheard,(data[0],data[1],pro,) )
 def anylysetheard(song,unit,pro):
-	s=calc.anylyselive(song,unit)
+	s=calcdp.anylyselive(song,unit)
 	pro.stop()
 	messagebox.showinfo('计算结果', s)
 root=tk.Tk()

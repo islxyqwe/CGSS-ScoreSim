@@ -138,3 +138,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 CGSS Score Calc.7z
+CGSS-ScoreCalc.7z
+src/test.py
