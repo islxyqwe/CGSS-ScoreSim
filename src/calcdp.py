@@ -72,7 +72,7 @@ def calcnotescore(location,nowcount,skills,lastcount,laststatusno,combobouns,sta
 def calcscoresum(song,unit):
 	maxnote=len(song[0])
 	standard=unit.appeal*float(song[1])/maxnote
-	skillcount=[-1,-1,-1,-1,-1]
+	skillcount=[0,0,0,0,0]
 	note=0
 	combobouns=1
 	score=[[0,np.array([1.0])]]+[[0,np.array([0.0])]]*31
@@ -141,4 +141,5 @@ def anylyselive(song,unit):
 	returnstr=returnstr+"\n最小得分="+str(minscore)+"\n10%得分小于="+str(percent10)+"\n25%得分小于="+str(percent25)
 	returnstr=returnstr+"\n50%得分小于="+str(percent50)+"\n75%得分小于="+str(percent75)
 	returnstr=returnstr+"\n90%得分小于="+str(percent90)+"\n最高得分="+str(maxscore)
+	#returnstr=returnstr+str(np.nonzero(s[1]).size)
 	return returnstr

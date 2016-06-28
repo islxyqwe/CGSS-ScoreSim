@@ -101,7 +101,7 @@ def bounsofnote(location,skills,songcolor):
 	cbbouns=[[1,1]]
 	sbbouns=[[1,1]]
 	for skill in skills:
-		if location%skill.interval<=skill.last:
+		if location%skill.interval<=skill.last and location>=skill.interval:
 			if skill.type:
 				sbbouns=bounsappend(sbbouns,1+skill.effect/100,skill.getrate(songcolor)/100)
 			else:
