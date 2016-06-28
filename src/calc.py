@@ -179,7 +179,10 @@ def skillcoverage(data):
 	]
 	s=""
 	for i in data:
-		score[int((i-1)/0.02)]+=1
+		target=int((i-1)/0.02)
+		if target>16:
+			target=16
+		score[target]+=1
 	for i in range(0,17):
 		if score[i]>0:
 			s=s+rating[i]+":"+str(score[i])+"("+str(int(100*score[i]/len(data)))+"%)\n"
