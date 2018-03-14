@@ -74,6 +74,7 @@ def calcprepare():
 	return [song,u]
 def calcresult(*args):
 	data=calcprepare()
+	data[0][2]="plus"
 	s=calc.calclive(data[0],data[1])
 	notebouns=calc.anylizeskill(data[0],data[1])
 	res=calc.calcEs(notebouns)

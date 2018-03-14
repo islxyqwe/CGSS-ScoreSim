@@ -168,26 +168,29 @@ def calclive(song,unit):
 		avgscore+=calcE(n)
 	return "期望得分="+str(avgscore)
 def skillcoverage(data):
-	score=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	score=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	rating=[
 	"无覆盖(F)","几乎无覆盖(E)","基本无覆盖(E+)",
 	"非常差(D-)","差(D)","比较差(D+)",
 	"略差(C-)","一般(C)","稍好(C+)",
 	"比较良好(B-)","良好(B)","十分良好(B+)",
 	"比较优秀(A-)","优秀(A)","十分优秀(A+)",
-	"出色(S)","完美(SS)"
+	"出色(S)","完美(SS)","大佬(SSS)"
 	]
 	s=""
 	for i in data:
 		target=int((i-1)/0.02)
-		if target>16:
-			target=16
+		if target>17:
+			target=17
 		score[target]+=1
 	for i in range(0,17):
 		if score[i]>0:
 			s=s+rating[i]+":"+str(score[i])+"("+str(int(100*score[i]/len(data)))+"%)\n"
 	avg=sum(data)/len(data)
-	s=s+"总评："+rating[int((avg-1)/0.02)]+"\n平均倍率:"+str(avg)
+	target=int((avg-1)/0.02)
+	if target>17:
+		target=17
+	s=s+"总评："+rating[target]+"\n平均倍率:"+str(avg)
 	return s
 def plotdata(PDFs):
 	i=0

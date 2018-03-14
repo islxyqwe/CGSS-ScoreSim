@@ -12,5 +12,7 @@ class skill:
 	def getrate(self,color):
 		if color==self.color or color=="all":
 			return self.rate*1.3
+		elif color=="plus":
+			return self.rate*1.3*1.2
 		else:
 			return self.rate
